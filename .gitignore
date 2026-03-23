@@ -1,0 +1,20 @@
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# Python Cache
+__pycache__/git
+*.pyc
+*.pyo
+*.pyd
+
+# Local Data (Resumes uploaded during testing)
+data/
+tests/fixtures/*.pdf
+tests/fixtures/*.docx
+
+# Environment Variables & OS files
+.env
+.DS_Store
+Thumbs.db
