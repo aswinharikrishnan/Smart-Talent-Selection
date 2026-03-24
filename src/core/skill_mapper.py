@@ -1,4 +1,5 @@
 class AISkillMatcher:
+    from src.core.semantic_engine import SemanticBrain
     def __init__(self, brain: SemanticBrain):
         self.brain = brain
         self.categories = {
