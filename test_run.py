@@ -1,52 +1,54 @@
-import os
 import sys
+import os
 
-# Ensure the 'src' directory is in the python path for modular imports
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+# Ensure the 'src' directory is in the path
+sys.path.append(os.path.join(os.getcwd(), 'src'))
 
-# Updated imports matching the new industry-standard structure
+from core.semantic_engine import SemanticBrain
+from core.skill_mapper import AISkillMatcher
 from ingestion.parsers.pdf_parser import extract_text_from_pdf
-from ingestion.parsers.docx_parser import extract_text_from_docx
 
-def run_industry_test():
-    """
-    Validates Feature 1: Multi-Format Resume Ingestion.
-    Tests PDF and DocX parsing from the new folder structure.
-    """
-    print(" Starting Smart Talent Engine Validation...")
+def process_all_resumes():
+    # 1. Initialize the AI Brain once (Saves memory on your Acer Aspire 3)
+    print("🧠 Initializing Semantic Engine...")
+    brain = SemanticBrain()
+    matcher = AISkillMatcher(brain)
     
-    # Path to your test files
-    fixtures_path = "tests/fixtures/"
+    # 2. Define the folder where you drop your PDFs
+    fixtures_dir = os.path.join("tests", "fixtures")
     
-    if not os.path.exists(fixtures_path):
-        print(f" Error: {fixtures_path} not found.")
+    if not os.path.exists(fixtures_dir):
+        print(f"❌ Error: Folder '{fixtures_dir}' not found!")
         return
 
-    # Filter for supported formats as per Requirement 1.17
-    files = [f for f in os.listdir(fixtures_path) if f.endswith(('.pdf', '.docx'))]
-
-    if not files:
-        print(" No test resumes found in tests/fixtures/")
+    # 3. Get a list of all PDF files in that folder
+    pdf_files = [f for f in os.listdir(fixtures_dir) if f.endswith('.pdf')]
+    
+    if not pdf_files:
+        print("⚠️ No PDF files found in tests/fixtures/. Add some files!")
         return
 
-    for file_name in files:
-        file_path = os.path.join(fixtures_path, file_name)
-        print(f"\n Processing: {file_name}")
+    print(f"🚀 Found {len(pdf_files)} resumes. Starting Batch AI Analysis...\n")
+
+    # 4. Loop through every PDF and generate unique scores
+    for filename in pdf_files:
+        file_path = os.path.join(fixtures_dir, filename)
+        print(f"--- 📄 Processing: {filename} ---")
         
         try:
-            if file_name.endswith('.pdf'):
-                # Fulfills Requirement 1.18: Intelligent Parsing
-                content = extract_text_from_pdf(file_path)
-            else:
-                # Fulfills Requirement 1.17: DocX Support
-                content = extract_text_from_docx(file_path)
+            # Extract the actual text for THIS specific file
+            resume_text = extract_text_from_pdf(file_path)
             
-            print(f" Success: Extracted {len(content)} characters.")
-            print(f" Preview: {content[:150]}...")
+            # Run AI Semantic Analysis
+            ai_scores = matcher.get_ai_score(resume_text)
+            
+            # Display Results
+            for category, score in ai_scores.items():
+                print(f"  - {category}: {score}%")
+            print("\n")
             
         except Exception as e:
-            # Fulfills Requirement 1.19: Validation & Feedback
-            print(f" Failed to process {file_name}: {str(e)}")
+            print(f"❌ Error processing {filename}: {e}")
 
 if __name__ == "__main__":
-    run_industry_test()
+    process_all_resumes()
