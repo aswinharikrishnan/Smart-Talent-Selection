@@ -1,54 +1,52 @@
 import sys
 import os
+from src.core.intent_extractor import IntentExtractor
+from src.core.skill_mapper import AISkillMatcher
+from src.core.semantic_engine import SemanticBrain
+from src.core.rank_engine import Ranker
+from src.ingestion.parsers.pdf_parser import extract_text_from_pdf
 
-# Ensure the 'src' directory is in the path
-sys.path.append(os.path.join(os.getcwd(), 'src'))
-
-from core.semantic_engine import SemanticBrain
-from core.skill_mapper import AISkillMatcher
-from ingestion.parsers.pdf_parser import extract_text_from_pdf
-
-def process_all_resumes():
-    # 1. Initialize the AI Brain once (Saves memory on your Acer Aspire 3)
-    print("🧠 Initializing Semantic Engine...")
+def main():
+    print("🏆 Starting Smart Talent Selection (Day 3)...")
+    
+    # Initialize Engines
+    ai_parser = IntentExtractor()
     brain = SemanticBrain()
     matcher = AISkillMatcher(brain)
     
-    # 2. Define the folder where you drop your PDFs
-    fixtures_dir = os.path.join("tests", "fixtures")
-    
-    if not os.path.exists(fixtures_dir):
-        print(f"❌ Error: Folder '{fixtures_dir}' not found!")
-        return
+    fixtures_path = "tests/fixtures"
+    pdf_files = [f for f in os.listdir(fixtures_path) if f.endswith('.pdf')]
+    leaderboard = []
 
-    # 3. Get a list of all PDF files in that folder
-    pdf_files = [f for f in os.listdir(fixtures_dir) if f.endswith('.pdf')]
-    
-    if not pdf_files:
-        print("⚠️ No PDF files found in tests/fixtures/. Add some files!")
-        return
-
-    print(f"🚀 Found {len(pdf_files)} resumes. Starting Batch AI Analysis...\n")
-
-    # 4. Loop through every PDF and generate unique scores
     for filename in pdf_files:
-        file_path = os.path.join(fixtures_dir, filename)
-        print(f"--- 📄 Processing: {filename} ---")
+        path = os.path.join(fixtures_path, filename)
+        text = extract_text_from_pdf(path)
         
-        try:
-            # Extract the actual text for THIS specific file
-            resume_text = extract_text_from_pdf(file_path)
-            
-            # Run AI Semantic Analysis
-            ai_scores = matcher.get_ai_score(resume_text)
-            
-            # Display Results
-            for category, score in ai_scores.items():
-                print(f"  - {category}: {score}%")
-            print("\n")
-            
-        except Exception as e:
-            print(f"❌ Error processing {filename}: {e}")
+        # 1. Get Metadata via Gemini
+        metadata = ai_parser.extract_metadata(text)
+        
+        # 2. Get Skill Scores via Sentence-Transformers
+        skill_scores = matcher.get_ai_score(text)
+        
+        # 3. Calculate Final Rank
+        final_score = Ranker.calculate_total_score(skill_scores, metadata['cgpa'])
+        status = Ranker.get_status(final_score)
+        
+        leaderboard.append({
+            "name": metadata['name'],
+            "cgpa": metadata['cgpa'],
+            "score": final_score,
+            "status": status
+        })
+
+    # Display Leaderboard
+    leaderboard.sort(key=lambda x: x['score'], reverse=True)
+    print("\n" + "="*60)
+    print(f"{'NAME':<20} | {'CGPA':<6} | {'SCORE':<8} | {'STATUS'}")
+    print("-" * 60)
+    for entry in leaderboard:
+        print(f"{entry['name']:<20} | {entry['cgpa']:<6} | {entry['score']}% | {entry['status']}")
+    print("="*60)
 
 if __name__ == "__main__":
-    process_all_resumes()
+    main()
