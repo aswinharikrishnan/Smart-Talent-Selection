@@ -1,15 +1,9 @@
 
-# 🤖 Smart Talent Selection Engine
-
-An AI-powered recruitment engine designed to process unstructured resume data, extract key entities, and perform semantic skill mapping using Transformer models and Large Language Models (LLMs).
-
 ## 🚀 Getting Started
 
 ### 1. Setup Environment
 
 Ensure your execution policy allows for script running, then activate the virtual environment:
-
-**PowerShell**
 
 **PowerShell**
 
@@ -20,9 +14,7 @@ python -m venv venv
 
 ### 2. Install Dependencies
 
-This project requires  **Sentence-Transformers** ,  **spaCy** ,  **OpenAI-SDK** , and  **python-dotenv** .
-
-**PowerShell**
+This project requires  **Sentence-Transformers** ,  **Streamlit** ,  **Ollama** , and  **Plotly** .
 
 **PowerShell**
 
@@ -31,58 +23,65 @@ pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
-### 3. Configure Environment Variables
+### 3. Local AI Engine (Day 4)
 
-Create a `.env` file in the root directory to store your API credentials. **Note:** This file is ignored by Git for security.
-
-**Plaintext**
-
-```
-OPENROUTER_API_KEY=your_key_here
-GEMINI_API_KEY=your_key_here
-```
-
-### 4. Run the Batch Analysis
-
-The engine scans the `tests/fixtures/` folder for PDF resumes and generates a ranked AI analysis report.
-
-**PowerShell**
+Install [Ollama](https://ollama.com/) and download the localized DeepSeek-R1 model:
 
 **PowerShell**
 
 ```
-python test_run.py
+ollama run deepseek-r1:1.5b
+```
+
+### 4. Launch the Dashboard
+
+Run the Streamlit frontend to upload resumes and view real-time analytics:
+
+**PowerShell**
+
+```
+streamlit run app.py
 ```
 
 ---
 
 ## 📅 Development Roadmap
 
-### **Day 1: The Ingestion Pipeline**
+### **Day 1-2: Foundation & Semantic Intelligence**
 
-* **PDF Extraction** : Implemented robust text extraction from unstructured PDF files.
-* **Data Modeling** : Defined Pydantic schemas for Resumes, Experience, and Education to ensure data integrity.
-* **Validation** : Successfully processed 6,000+ character engineering resumes.
+* **PDF Ingestion** : Robust text extraction and Pydantic data modeling.
+* **AI Brain** : Integrated `all-MiniLM-L6-v2` for contextual skill matching.
+* **Semantic Scoring** : Implemented **Cosine Similarity** for ECE-specific fields like VLSI and DSP.
 
-### **Day 2: Semantic Intelligence & Batch Processing**
+### **Day 3: LLM Architecture & Security**
 
-* **AI Brain** : Integrated `all-MiniLM-L6-v2` Sentence-Transformer for contextual skill matching.
-* **Precision Extraction** : Built Regex utilities to identify Indian mobile numbers and professional emails.
-* **Dynamic Batching** : Upgraded `test_run.py` to process multiple files in the `tests/fixtures/` directory automatically.
-* **Semantic Scoring** : Moved beyond keyword counts to **Cosine Similarity** scores for ECE-specific fields like VLSI, DSP, and ML.
+* **Generative Layer** : Integrated LLMs for complex entity extraction (Name, 9.05+ CGPA, Email).
+* **Provider-Agnostic Design** : Support for Gemini, DeepSeek, and OpenRouter via a unified interface.
+* **Security** : Implemented `python-dotenv` for secure credential management.
 
-### **Day 3: LLM Integration & API Architecture**
+### **Day 4-7: Local AI & Professional Dashboard**
 
-* **Generative AI Layer** : Integrated LLMs (Gemini/Llama) to perform complex entity extraction (Name, CGPA, Email) with higher reasoning than traditional Regex.
-* **Provider-Agnostic Design** : Re-engineered the `IntentExtractor` to support multiple backends (Google Gemini, DeepSeek, OpenRouter) using the OpenAI-compatible standard.
-* **Security Layer** : Implemented `python-dotenv` to decouple sensitive API keys from the codebase.
-* **Ranking Logic 2.0** : Enhanced the `Ranker` engine with weighted scoring (70% Skills / 30% CGPA) and automated hiring status tags (🚀 Must Hire, ✅ Strong Fit).
+* **Edge AI Integration** : Migrated to **Local LLM (DeepSeek-R1 via Ollama)** to bypass cloud API rate limits and costs.
+* **ECE Skill Taxonomy** : Deep mapping for core domains (Embedded Systems, FPGA, VLSI, and Signal Processing).
+* **Streamlit UI/UX** : Built a professional HR dashboard with drag-and-drop resume uploading.
+* **Talent Analytics** : Integrated **Plotly** visualizations, including competency radar charts and academic-vs-skill bar graphs.
+* **Weighted Ranking 2.0** : Refined scoring logic with a 70/30 skill-to-academic ratio, featuring automated status tags (🚀 Must Hire, ✅ Strong Fit).
+
+---
 
 ## 📂 Project Structure
 
-* `src/ingestion/`: Logic for PDF extraction and text cleaning.
-* `src/core/intent_extractor.py`: The LLM interface for intelligent metadata extraction.
-* `src/core/rank_engine.py`: Weighted scoring logic and candidate categorization.
+* `app.py`: The main Streamlit web application and analytics dashboard.
+* `src/core/intent_extractor.py`: Logic for local LLM metadata extraction.
+* `src/core/rank_engine.py`: Weighted scoring and ECE taxonomy mapping.
 * `tests/fixtures/`: Storage for sample resumes (Drop any PDF here to test).
-* `.env`: (Local only) Secure storage for API keys.
-* `test_run.py`: The main entry point for batch AI processing.
+* `test_run.py`: CLI entry point for batch processing.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Language:** Python 3.10+
+* **AI Models:** DeepSeek-R1 (Local), Sentence-Transformers, Llama 3.1
+* **Frontend:** Streamlit, Plotly (Visualizations)
+* **Infrastructure:** Ollama, OpenAI SDK, Pydantic
