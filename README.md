@@ -1,4 +1,3 @@
-
 # MEC Smart Talent Selection Engine 🚀
 
 A high-speed, semantic recruitment pipeline designed to automate resume parsing and candidate ranking for engineering roles. Built for the **Cymonic.ai Hackathon**.
@@ -25,10 +24,25 @@ This engine replaces keyword-counting with a **Weighted Semantic Ranking Model**
 
 ## ⚙️ Setup Instructions
 
-To run this project locally:
+Follow these steps to run the HR Dashboard locally:
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/aswinhkk/Smart-Talent-Selection-Engine](https://github.com/aswinhkk/Smart-Talent-Selection-Engine)
-   cd Smart-Talent-Selection-Engine
-   ```
+```bash
+# 1. Clone the repository
+git clone https://github.com/aswinhkk/Smart-Talent-Selection-Engine
+
+# 2. Navigate to the project folder
+cd Smart-Talent-Selection-Engine
+
+# 3. Create and activate a virtual environment
+python -m venv venv
+# On Windows:
+.\venv\Scripts\activate
+# On Linux/Mac:
+# source venv/bin/activate
+
+# 4. Install all dependencies
+pip install streamlit==1.31.0 pypdf==4.0.1 plotly==5.18.0 pandas==2.2.0 python-dotenv==1.0.1
+
+# 5. Launch the application
+streamlit run app.py
+```
