@@ -30,7 +30,7 @@ This engine implements a **Weighted 70/30 Ranking Model** to ensure a holistic e
 
 ```bash
 # 1. Clone the repository
-git clone [https://github.com/aswinharikrishnan/Smart-Talent-Selection](https://github.com/aswinharikrishnan/Smart-Talent-Selection)
+git clone https://github.com/aswinharikrishnan/Smart-Talent-Selection
 
 # 2. Navigate to the project folder
 cd Smart-Talent-Selection
