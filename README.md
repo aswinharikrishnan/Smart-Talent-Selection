@@ -48,7 +48,8 @@ pip install streamlit==1.31.0 pypdf==4.0.1 plotly==5.18.0 pandas==2.2.0 python-d
 streamlit run app.py
 ```
 
+## 🎥 Project Demo
 
-### Demo video Link
+[![Watch the Demo](https://img.shields.io/badge/Click_to_Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://drive.google.com/file/d/15BuXBu7idE6a82hdCtEQs-Kwj8kKT30o/view?usp=drive_link)
 
-`https://drive.google.com/file/d/15BuXBu7idE6a82hdCtEQs-Kwj8kKT30o/view?usp=drive_link`
+*Click the badge above to view the full technical walkthrough on Google Drive.*
