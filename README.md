@@ -1,4 +1,3 @@
-
 # Smart Talent Selection Engine 🚀
 
 **Developed for the Cymonic.ai Hackathon | MEC Kochi**
@@ -48,3 +47,8 @@ pip install streamlit==1.31.0 pypdf==4.0.1 plotly==5.18.0 pandas==2.2.0 python-d
 # 5. Launch the application
 streamlit run app.py
 ```
+
+
+### Demo video Link
+
+`https://drive.google.com/file/d/15BuXBu7idE6a82hdCtEQs-Kwj8kKT30o/view?usp=drive_link`
