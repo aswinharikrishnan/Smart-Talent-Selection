@@ -1,37 +1,39 @@
-# MEC Smart Talent Selection Engine 🚀
 
-A high-speed, semantic recruitment pipeline designed to automate resume parsing and candidate ranking for engineering roles. Built for the **Cymonic.ai Hackathon**.
+# Smart Talent Selection Engine 🚀
+
+**Developed for the Cymonic.ai Hackathon | MEC Kochi**
+
+A high-speed, semantic recruitment pipeline designed to automate resume parsing and candidate ranking. This tool replaces rigid keyword-matching with a **Weighted Technical Density Model** to identify top-tier engineering talent in seconds.
 
 ## 🔴 The Problem
 
-Traditional Applicant Tracking Systems (ATS) rely on rigid keyword matching, often rejecting elite engineering talent due to unstructured PDF layouts or non-standard formatting. Recruiters spend an average of only 6 seconds per resume, leading to a high "False Negative" rate for specialized roles like VLSI and Embedded Systems.
+Traditional Applicant Tracking Systems (ATS) often reject elite engineering talent due to unstructured PDF layouts or non-standard formatting. Recruiters spend an average of only 6 seconds per resume, leading to a high "False Negative" rate for specialized roles like VLSI, Embedded Systems, and Machine Learning.
 
 ## 🟢 The Solution
 
-This engine replaces keyword-counting with a **Weighted Semantic Ranking Model**:
+This engine implements a **Weighted 70/30 Ranking Model** to ensure a holistic evaluation:
 
-- **70/30 Scoring:** Prioritizes Technical Competency (70%) over Academic Excellence (30%) to find "Must Hire" talent.
-- **Entity Extraction:** Custom Regex-based parser to reliably identify high-value markers .
-- **Skill Clustering:** Automatically maps skills into specialized ECE domains (VLSI, ML, Embedded) for density analysis.
+- **70% Technical Competency:** Automatically maps skills into specialized ECE clusters (VLSI, ML, Embedded) to measure expertise density.
+- **30% Academic Excellence:** Custom Regex-based extraction of high-value markers, including specialized detection for a **9.05 CGPA**.
+- **Interactive HR Dashboard:** Visualizes candidate depth using Plotly radar charts, providing instant "Must Hire" or "Strong Fit" recommendations.
 
 ## 🛠️ Tech Stack
 
-- **Language:** Python 3.10
-- **UI Framework:** Streamlit
-- **Data Visualization:** Plotly
-- **Data Processing:** Pandas, PyPDF, Regex
-- **Deployment:** Streamlit Community Cloud
+- **Core Logic:** Python 3.10
+- **User Interface:** Streamlit (High-speed Web Framework)
+- **Analytics:** Plotly Express (Interactive Competency Mapping)
+- **Data Ingestion:** PyPDF & Regex (Automated Entity Extraction)
+- **Data Management:** Pandas (Scoring Matrices & Ranking Logic)
+- **Cloud Infrastructure:** Streamlit Community Cloud
 
-## ⚙️ Setup Instructions
-
-Follow these steps to run the HR Dashboard locally:
+## ⚙️ Quick Start: Installation & Setup
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/aswinhkk/Smart-Talent-Selection-Engine
+git clone [https://github.com/aswinharikrishnan/Smart-Talent-Selection](https://github.com/aswinharikrishnan/Smart-Talent-Selection)
 
 # 2. Navigate to the project folder
-cd Smart-Talent-Selection-Engine
+cd Smart-Talent-Selection
 
 # 3. Create and activate a virtual environment
 python -m venv venv
