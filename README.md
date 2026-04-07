@@ -12,7 +12,7 @@ Traditional Applicant Tracking Systems (ATS) rely on rigid keyword matching, oft
 This engine replaces keyword-counting with a **Weighted Semantic Ranking Model**:
 
 - **70/30 Scoring:** Prioritizes Technical Competency (70%) over Academic Excellence (30%) to find "Must Hire" talent.
-- **Entity Extraction:** Custom Regex-based parser to reliably identify high-value markers like a **9.05 CGPA**.
+- **Entity Extraction:** Custom Regex-based parser to reliably identify high-value markers .
 - **Skill Clustering:** Automatically maps skills into specialized ECE domains (VLSI, ML, Embedded) for density analysis.
 
 ## 🛠️ Tech Stack
